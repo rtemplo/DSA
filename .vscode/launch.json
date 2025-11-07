@@ -1,0 +1,98 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Debug TypeScript (ts-node)",
+			"type": "node",
+			"request": "launch",
+			"program": "${workspaceFolder}/src/index.ts",
+			"runtimeArgs": [
+				"--require",
+				"ts-node/register"
+			],
+			"env": {
+				"TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.json",
+				"TS_NODE_COMPILER_OPTIONS": "{\"sourceMap\":false,\"inlineSourceMap\":true}"
+			},
+			"sourceMaps": true,
+			"cwd": "${workspaceFolder}",
+			"outFiles": [],
+			"resolveSourceMapLocations": [
+				"${workspaceFolder}/src/**",
+				"!**/node_modules/**",
+				"!**/dist/**"
+			],
+			"skipFiles": [
+				"<node_internals>/**",
+				"${workspaceFolder}/node_modules/**",
+				"${workspaceFolder}/dist/**/*.js"
+			],
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"autoAttachChildProcesses": false
+		},
+		{
+			"name": "Debug Current TypeScript File",
+			"type": "node",
+			"request": "launch",
+			"program": "${file}",
+			"runtimeArgs": [
+				"--require",
+				"ts-node/register"
+			],
+			"env": {
+				"TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.json",
+				"TS_NODE_COMPILER_OPTIONS": "{\"sourceMap\":false,\"inlineSourceMap\":true}"
+			},
+			"sourceMaps": true,
+			"cwd": "${workspaceFolder}",
+			"outFiles": [],
+			"resolveSourceMapLocations": [
+				"${workspaceFolder}/src/**",
+				"!**/node_modules/**",
+				"!**/dist/**"
+			],
+			"skipFiles": [
+				"<node_internals>/**",
+				"${workspaceFolder}/node_modules/**",
+				"${workspaceFolder}/dist/**/*.js"
+			],
+			"console": "internalConsole",
+			"internalConsoleOptions": "openOnSessionStart",
+			"autoAttachChildProcesses": false
+		},
+		{
+			"name": "Debug Compiled JavaScript",
+			"type": "node",
+			"request": "launch",
+			"program": "${workspaceFolder}/dist/index.js",
+			"sourceMaps": true,
+			"cwd": "${workspaceFolder}",
+			"outFiles": ["${workspaceFolder}/dist/**/*.js"],
+			"skipFiles": ["<node_internals>/**"],
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"preLaunchTask": "tsc: build - tsconfig.json"
+		},
+		{
+			"name": "Debug with Arguments",
+			"type": "node",
+			"request": "launch",
+			"program": "${workspaceFolder}/src/index.ts",
+			"runtimeArgs": [
+				"--require",
+				"ts-node/register"
+			],
+			"env": {
+				"TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.json",
+				"NODE_ENV": "development"
+			},
+			"sourceMaps": true,
+			"cwd": "${workspaceFolder}",
+			"outFiles": ["${workspaceFolder}/dist/**/*.js"],
+			"skipFiles": ["<node_internals>/**"],
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen"
+		}
+	]
+}

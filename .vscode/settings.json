@@ -1,0 +1,54 @@
+{
+	"typescript.preferences.includePackageJsonAutoImports": "auto",
+	"typescript.suggest.autoImports": true,
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": "explicit",
+		"source.fixAll.biome": "explicit"
+	},
+	"debug.console.acceptSuggestionOnEnter": "off",
+	"debug.console.fontSize": 14,
+	"debug.console.lineHeight": 22,
+	"debug.internalConsoleOptions": "neverOpen",
+	"debug.openDebug": "openOnDebugBreak",
+	"debug.showBreakpointsInOverviewRuler": true,
+	"debug.showInlineBreakpointCandidates": true,
+	"debug.allowBreakpointsEverywhere": false,
+	"debug.focusWindowOnBreak": true,
+	"debug.showSubSessionsInToolBar": false,
+	"debug.toolBarLocation": "docked",
+	"js.debugger.sourceMaps": "on",
+	"files.exclude": {
+		"**/node_modules": true,
+		"**/dist": false
+	},
+	"search.exclude": {
+		"**/node_modules": true,
+		"**/dist": true
+	},
+	// Editor formatting settings to match Biome configuration
+	"editor.tabSize": 2,
+	"editor.insertSpaces": true,
+	"editor.detectIndentation": false,
+	"[typescript]": {
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true,
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[javascript]": {
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true,
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[json]": {
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true,
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[jsonc]": {
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true,
+		"editor.defaultFormatter": "biomejs.biome"
+	}
+}
