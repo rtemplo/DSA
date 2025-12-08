@@ -1,31 +1,43 @@
 export function findSmallestMissingPositive(orderNumbers: number[]): number {
+  const n = orderNumbers.length;
   let i = 0;
-  // If array is empty default to 1, otherwise default to length + 1 if all positives are present
-  let smallestMissingPositive =
-    orderNumbers.length > 0 ? orderNumbers[orderNumbers.length - 1]! + 1 : 1;
 
-  while (i < orderNumbers.length) {
-    const num = orderNumbers[i]! || -1;
-    const numAtTarget = orderNumbers[num - 1];
+  // Phase 1: Place each positive integer at its correct index (num at index num-1)
+  while (i < n) {
+    const currentNum = orderNumbers[i]!;
+    const targetIndex = currentNum - 1;
 
-    if (num === i + 1 || num <= 0) {
+    /**
+     * Skip if: already in correct position, out of range, or target slot has same value (duplicate)
+     * For out of range numbers and duplicates there is no need to swap. They are left to be currently
+     * misaligned to their index position. As the loop progresses they will either be corrected by a
+     * subsequent swap or left misaligned and eventually be caught in phase 2.
+     */
+    if (
+      currentNum <= 0 || // range: ignore non-positive numbers
+      currentNum > n || // range: ignore numbers larger than n
+      currentNum === i + 1 || // already in the correct position
+      orderNumbers[targetIndex] === currentNum // duplicate check
+    ) {
       i++;
     } else {
-      const hold = numAtTarget ?? -1;
-      orderNumbers[num - 1] = num;
-      orderNumbers[i] = hold === num ? -1 : hold;
+      // Swap current number to its target position
+      [orderNumbers[i], orderNumbers[targetIndex]] = [orderNumbers[targetIndex]!, currentNum];
     }
   }
 
-  for (let i = 0; i <= orderNumbers.length; i++) {
-    const num = orderNumbers[i]!;
-    if (num < 0) {
-      smallestMissingPositive = i + 1;
-      break;
+  // Phase 2: Find first index where value doesn't match position
+  for (let i = 0; i < n; i++) {
+    if (orderNumbers[i] !== i + 1) {
+      return i + 1;
     }
   }
-  console.log("Reordered Array:", orderNumbers);
-  return smallestMissingPositive;
+
+  /**
+   * Default: If no return is made in phase 2 it means all positions 1 to n are filled correctly
+   * hence the smallest missing positive is the next number in the sequence, which is n + 1.
+   */
+  return n + 1;
 }
 
 const arr: number[] = [3, 4, -1, 1];
