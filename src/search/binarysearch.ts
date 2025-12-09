@@ -58,10 +58,35 @@ function recursiveBinarySearch<T>(
   }
 }
 
+// This is a variant of Binary Search that finds the first occurrence of a target value
+// Duplicates may exist in the array
+function findFirstOccurrence(nums: number[], target: number): number {
+  let leftIndex: number = 0;
+  let rightIndex: number = nums.length - 1;
+  let foundIndex: number = -1;
+
+  while (leftIndex <= rightIndex) {
+    const mid = Math.floor((leftIndex + rightIndex) / 2);
+    const currentValue = nums[mid]!;
+
+    if (currentValue === target) {
+      foundIndex = mid;
+    }
+
+    if (currentValue < target) {
+      leftIndex = mid + 1;
+    } else {
+      rightIndex = mid - 1;
+    }
+  }
+
+  return foundIndex; // target not found
+}
+
 // Example usage and testing
-function testBinarySearch(): void {
+export function testBinarySearch(): void {
   const numbers = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19];
-  const target = 7;
+  const target = 19;
 
   const result = binarySearch(numbers, target);
 
@@ -80,10 +105,12 @@ function testBinarySearch(): void {
 }
 
 // Export for potential use in other files
-export { binarySearch, recursiveBinarySearch };
+export { binarySearch, findFirstOccurrence, recursiveBinarySearch };
 
 // Run the test if this is the main module
-if (require.main === module) {
-  console.log("🚀 Testing TypeScript setup with Binary Search algorithm");
-  testBinarySearch();
-}
+// if (require.main === module) {
+// console.log("🚀 Testing TypeScript setup with Binary Search algorithm");
+// testBinarySearch();
+const firstOccurrence = findFirstOccurrence([1, 2, 2, 2, 3, 5, 7, 7, 7, 7, 8, 8, 10], 10);
+console.log(`First occurrence is at index ${firstOccurrence}`);
+// }
