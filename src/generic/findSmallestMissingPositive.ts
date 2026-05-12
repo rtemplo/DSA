@@ -17,7 +17,7 @@ export function findSmallestMissingPositive(orderNumbers: number[]): number {
       currentNum <= 0 || // range: ignore non-positive numbers
       currentNum > n || // range: ignore numbers larger than n
       currentNum === i + 1 || // already in the correct position
-      orderNumbers[targetIndex] === currentNum // duplicate check
+      orderNumbers[targetIndex] === currentNum // duplicate check, number has been seen before and is already in its target position
     ) {
       i++;
     } else {
