@@ -38,7 +38,7 @@ const people: Person[] = [
 // console.log("peopleSortedByAge: ", peopleSortedByAge);
 // console.log("peopleSortedBySalary: ", peopleSortedBySalary);
 
-const sortPeopleByKey = (people: Person[], key: keyof Person): Person[] => {
+const _sortPeopleByKey = (people: Person[], key: keyof Person): Person[] => {
   return [...people].sort((a, b) => {
     if (typeof a[key] === "string" && typeof b[key] === "string") {
       return (a[key] as string).localeCompare(b[key] as string);
@@ -54,10 +54,39 @@ const sortPeopleByKey = (people: Person[], key: keyof Person): Person[] => {
 // console.log("sortPeopleByKey (age): ", sortPeopleByKey(people, "age"));
 // console.log("sortPeopleByKey (salary): ", sortPeopleByKey(people, "salary"));
 
-const compareValues = <T extends string | number>(a: T, b: T, dir: "asc" | "desc"): number => {
-  const cmp = typeof a === "string" ? a.localeCompare(b as string) : (a as number) - (b as number);
-  return dir === "desc" ? -cmp : cmp;
+type SortableValue = string | number | boolean | bigint | Date;
+
+const isSortable = (val: unknown): val is SortableValue => {
+  const type = typeof val;
+  return (
+    type === "string" ||
+    type === "number" ||
+    type === "boolean" ||
+    type === "bigint" ||
+    val instanceof Date
+  );
 };
+
+function compareValues<T extends SortableValue>(a: T, b: T, dir: "asc" | "desc" = "asc"): number {
+  if (!isSortable(a) || !isSortable(b)) {
+    return 0;
+  }
+
+  let cmp: number;
+  if (a instanceof Date && b instanceof Date) {
+    cmp = a.getTime() - b.getTime();
+  } else if (typeof a === "bigint" && typeof b === "bigint") {
+    cmp = a > b ? 1 : a < b ? -1 : 0;
+  } else if (typeof a === "boolean" && typeof b === "boolean") {
+    cmp = Number(a) - Number(b);
+  } else if (typeof a === "string" && typeof b === "string") {
+    cmp = a.localeCompare(b);
+  } else {
+    cmp = (a as number) - (b as number);
+  }
+
+  return dir === "desc" ? -cmp : cmp;
+}
 
 console.log(
   "sortPeopleByName (asc): ",
