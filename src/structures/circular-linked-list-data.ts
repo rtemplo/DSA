@@ -16,3 +16,5 @@ carouselItems.forEach((item, index, arr) => {
   item.prev = arr[(index - 1 + arr.length) % arr.length]; // wrap around
   item.next = arr[(index + 1) % arr.length]; // wrap around
 });
+
+console.log(carouselItems);
