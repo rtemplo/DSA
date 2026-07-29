@@ -15,6 +15,7 @@ interface Person {
   name: string;
   age: number;
   salary: number;
+  [key: string]: SortableValue;
 }
 
 interface SortOrder {
@@ -88,6 +89,19 @@ function compareValues<T extends SortableValue>(a: T, b: T, dir: "asc" | "desc" 
   return dir === "desc" ? -cmp : cmp;
 }
 
+const sortByMultipleKeys = <T extends Record<string, SortableValue>>(
+  dataArray: T[],
+  sortOrder: { key: keyof T; dir: "asc" | "desc" }[]
+): T[] => {
+  return [...dataArray].sort((a, b) => {
+    for (const { key, dir } of sortOrder) {
+      const cmp = compareValues(a[key], b[key], dir);
+      if (cmp !== 0) return cmp;
+    }
+    return 0;
+  });
+};
+
 console.log(
   "sortPeopleByName (asc): ",
   [...people].sort((a, b) => compareValues(a.name, b.name, "asc"))
@@ -114,19 +128,6 @@ console.log(
   [...people].sort((a, b) => compareValues(a.salary, b.salary, "desc"))
 );
 
-const sortByMultipleKeys = (
-  people: Person[],
-  sortOrder: { key: keyof Person; dir: "asc" | "desc" }[]
-): Person[] => {
-  return [...people].sort((a, b) => {
-    for (const { key, dir } of sortOrder) {
-      const cmp = compareValues(a[key], b[key], dir);
-      if (cmp !== 0) return cmp;
-    }
-    return 0;
-  });
-};
-
 const sortOrder: SortOrder[] = [
   { key: "age", dir: "asc" },
   { key: "salary", dir: "desc" },
@@ -134,7 +135,7 @@ const sortOrder: SortOrder[] = [
 
 const sortedByMultipleKeys = [...people].sort((a, b) => {
   for (const { key, dir } of sortOrder) {
-    const cmp = compareValues(a[key], b[key], dir);
+    const cmp = compareValues(a[key] as SortableValue, b[key] as SortableValue, dir);
     if (cmp !== 0) return cmp;
   }
   return 0;
