@@ -15,6 +15,8 @@ const products: Product[] = [
   { sku: "LAMP", price: 60, category: "lighting" },
   { sku: "BULB", price: 12, category: "lighting" },
   { sku: "RUG", price: 220, category: "decor" },
+  { sku: "MIRROR", price: 90, category: "decor" },
+  { sku: "STOOL", price: 45, category: "furniture" },
 ];
 
 const orders: Order[] = [
@@ -82,5 +84,12 @@ const unfillableOrders = orders
   .filter(({ unknownSkus }) => unknownSkus.length > 0);
 
 console.log("unfillableOrders: ", unfillableOrders);
+
+// Exercise 5:
+// Find every product that was never ordered by any customer.
+// Expected shape: Product[]
+const orderedSkus = new Set(orders.flatMap(({ items }) => Object.keys(items)));
+const unsoldProducts = products.filter(({ sku }) => !orderedSkus.has(sku));
+console.log("unsoldProducts: ", unsoldProducts);
 
 console.log("exiting");
