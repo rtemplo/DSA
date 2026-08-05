@@ -19,8 +19,15 @@
 // Expected: nextStatus("pending") -> "active", nextStatus("done") -> "pending"
 type Status = "pending" | "active" | "done";
 
-function nextStatus(_status: Status): Status {
-  return "pending";
+function nextStatus(status: Status): Status {
+  switch (status) {
+    case "pending":
+      return "active";
+    case "active":
+      return "done";
+    case "done":
+      return "pending";
+  }
 }
 
 console.log("nextStatus('pending'): ", nextStatus("pending")); // expected: "active"
@@ -32,10 +39,10 @@ console.log("nextStatus('done'): ", nextStatus("done")); // expected: "pending"
 // each element's type and position via variadic tuple types.
 // Expected: concatTuples([1, "a"], [true]) -> [1, "a", true]
 function concatTuples<A extends unknown[], B extends unknown[]>(
-  _a: [...A],
-  _b: [...B]
+  a: [...A],
+  b: [...B]
 ): [...A, ...B] {
-  return [] as unknown as [...A, ...B];
+  return [...a, ...b] as unknown as [...A, ...B];
 }
 
 console.log("concatTuples: ", concatTuples([1, "a"], [true]));
@@ -44,7 +51,7 @@ console.log("concatTuples: ", concatTuples([1, "a"], [true]));
 // Write `MyReturnType<T>`, a from-scratch version of the built-in
 // `ReturnType<T>`, using `infer` to extract a function's return type.
 // Expected: MyReturnType<() => string> -> string
-type MyReturnType<T> = T;
+type MyReturnType<T> = T extends (...args: never[]) => infer R ? R : never;
 
 function greet(): string {
   return "hi";
@@ -67,8 +74,21 @@ interface Success {
 }
 type NetworkState = Loading | Errored | Success;
 
-function describe(_state: NetworkState): string {
-  return "";
+function assertNever(x: never): never {
+  throw new Error(`Unexpected shape: ${JSON.stringify(x)}`);
+}
+
+function describe(state: NetworkState): string {
+  switch (state.status) {
+    case "loading":
+      return "loading...";
+    case "error":
+      return `error: ${state.message}`;
+    case "success":
+      return `success: ${state.data}`;
+    default:
+      return assertNever(state);
+  }
 }
 
 console.log("describe(loading): ", describe({ status: "loading" })); // expected: "loading..."
@@ -86,15 +106,15 @@ class Stack<T> {
   }
 
   pop(): T | undefined {
-    return undefined;
+    return this.items.pop();
   }
 
   peek(): T | undefined {
-    return undefined;
+    return this.items[this.items.length - 1];
   }
 
   isEmpty(): boolean {
-    return true;
+    return this.items.length === 0;
   }
 }
 
@@ -109,10 +129,10 @@ console.log("isEmpty: ", stack.isEmpty()); // expected: false
 // Write a branded `UserId` type (a `string` tagged so it can't be mixed up
 // with a plain `string`), plus `createUserId` to construct one.
 // Expected: createUserId("u1") -> a UserId
-type UserId = string;
+type UserId = string & { __brand: "UserId" };
 
 function createUserId(id: string): UserId {
-  return id;
+  return id as UserId;
 }
 
 const userId: UserId = createUserId("u1");
