@@ -48,3 +48,4 @@ multiple modules.
 | -------------------- | ----------------- |
 | `practice-exam-1.ts` | 2, 4, 5, 6, 7     |
 | `practice-exam-2.ts` | 1, 3, 7, 8, 9, 10 |
+| `practice-exam-3.ts` | 2, 4, 5, 6, 8, 9  |
