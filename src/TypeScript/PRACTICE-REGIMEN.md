@@ -41,12 +41,17 @@ multiple modules.
   `src/misc/orders.ts` (e.g. `const unsoldProducts: Product[] = [];`).
 - Follow each stub with a small runnable demo (`console.log`) so answers can
   be sanity-checked with `npm run dev`.
+- Whenever a new `practice-exam-N.ts` is generated, also create an identical
+  starting copy named `practice-exam-N answered.ts` in the same step, so the
+  original stays blank and the user solves the questions in the copy.
 
 ## Exam log
 
-| File                 | Modules covered   |
-| -------------------- | ----------------- |
-| `practice-exam-1.ts` | 2, 4, 5, 6, 7     |
-| `practice-exam-2.ts` | 1, 3, 7, 8, 9, 10 |
-| `practice-exam-3.ts` | 2, 4, 5, 6, 8, 9  |
-| `practice-exam-4.ts` | 1, 3, 5, 7, 8, 10 |
+| File                 | Modules covered      |
+| -------------------- | -------------------- |
+| `practice-exam-1.ts` | 2, 4, 5, 6, 7        |
+| `practice-exam-2.ts` | 1, 3, 7, 8, 9, 10    |
+| `practice-exam-3.ts` | 2, 4, 5, 6, 8, 9     |
+| `practice-exam-4.ts` | 1, 3, 5, 7, 8, 10    |
+| `practice-exam-5.ts` | 1, 2, 4, 6, 9, 10    |
+| `practice-exam-6.ts` | 2, 3, 4, 5, 7, 8, 10 |

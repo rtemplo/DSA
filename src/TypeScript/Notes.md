@@ -21,9 +21,9 @@ namespace createId {
 
 - `extends` keyword contexts, when used:
   1. on a generic parameter, restricts the shape of the parameter.
-     `type PartialExcept<T, K extends keyof T>` <== K is a property or a union of properties from T
+     `type PartialExcept<T, K extends keyof T>` <== K can be a single property from T or a union of properties from T.
 
-  2. between interfaces, merges the interfaces where the last interface takes precedence for any properties in common.
+  2. on interface definitions -merges the interface with the one it is extending. Properties in common are overriden.
 
   3. in a ternary creates conditional types
 
